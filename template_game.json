@@ -617,7 +617,7 @@
         "cases": [
           {
             "arguments": [
-              "more"
+              "about"
             ],
             "type": "has_any_word",
             "uuid": "4b2b833a-2886-42d7-8849-4387d4535689",
@@ -651,7 +651,7 @@
         "categories": [
           {
             "exit_uuid": "f375e952-103a-45f7-9510-903d551952d7",
-            "name": "More",
+            "name": "About",
             "uuid": "8976c771-8471-4d03-9fc3-e99d1bf3c08a"
           },
           {
