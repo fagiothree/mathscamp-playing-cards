@@ -48,7 +48,7 @@ f_replacements.close()
 container_file = open("template_container.json", "r")
 container = json.load(container_file)
 
-flow_info_file = open("flows_info_new.json", "r")
+flow_info_file = open("flows_info.json", "r")
 flow_info = json.load(flow_info_file)
 flow_info = []
 
@@ -56,6 +56,7 @@ cardcsv = open('cards.csv')
 reader = csv.reader(cardcsv)
 for row in reader:
     card = row[0]
+    
     
     filebase = row[1].lower().replace(" ", "-")
 
@@ -199,10 +200,16 @@ for row in reader:
                             if len(images)>0:
                                 text_stripped = " "
                             else:
+                                # replace latex formulas with corresponding unicode version
+                                if par.startswith("<!-- LaTeX Start -->"):
+                                    formulas = par.split("<!-- LaTeX End -->")
+                                    par = formulas[1].replace("<!--","").replace("-->","")
+
+
                                 # strip image tags and trailing whitespace
                                 # We also strip Markdown formatting and replace linebreaks with \n,
                                 # because RapidPro doesn't support Markdown and JSON doesn't allow linebreaks.
-                                text_stripped = cleanhtml(par).strip().replace("\n\n", "\n")
+                                text_stripped = cleanhtml(par).strip().replace("\n\n", "\n").replace("&gt;", ">").replace("&lt;", "<")
                         
 
                             node["actions"].append({
@@ -232,7 +239,7 @@ for row in reader:
     #create trigger for flow
     new_trigger = {
       "trigger_type": "K",
-      "keyword": "VMC_" + corresp_flow_info["card number"],
+      "keyword": "vmc_" + corresp_flow_info["card number"].lower(),
       "flow": {
         "uuid": corresp_flow_info["uuid"],
         "name": corresp_flow_info["flow name"]
@@ -253,15 +260,15 @@ for row in reader:
     }
     # add trigger words
     container["triggers"].append(new_trigger)
-    container["triggers"].append(new_trigger_with_typo)
+    #container["triggers"].append(new_trigger_with_typo)  # NOT VALID TRIGGER!
 
 
 
 # Save filled up template container as JSON file
-generated_flows = open("./output/new_generated_flows_diamonds_newid.json", "w")
+generated_flows = open("./output/generated_flows.json", "w")
 json.dump(container, generated_flows, indent=2)   # ensure_ascii=False
 generated_flows.close()
 
 # Update flow info file if flows were added
-with open('./flows_info_no_rep.json', 'w') as outfile:
+with open('./flows_info.json', 'w') as outfile:
     json.dump(flow_info, outfile,indent=2)
