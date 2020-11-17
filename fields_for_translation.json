@@ -1,0 +1,30 @@
+{
+  "title": "Y",
+  "metadata": {
+    "type": "N"
+  },
+  "main_version": {
+    "statement": "Y",
+	"correct_answer": "N",
+    "hint": "Y",
+    "explanation": "Y",
+	"further_instructions": "Y",
+	"strategy_tips": "Y"
+  },
+  "extension_1": {
+    "statement": "Y",
+    "hint": "Y",
+	"correct_answer": "N",
+    "explanation": "Y"
+  },
+  "extension_2": {
+    "statement": "Y",
+    "hint": "Y",
+	"correct_answer": "N",
+    "explanation": "Y"
+  },
+  "additional_information": {
+    "about": "Y",
+    "references": "N"
+  }
+}
